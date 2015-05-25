@@ -20,7 +20,7 @@ def brain_function():
     mem_group = []
     memory_counter += 1
     for nerons in sensory_atlas:
-        memory_frag = f(memory_counter)
+        memory_frag = nerons(memory_counter)
         mem_group.append(memory_frag)
     # give memory a common iterable index
     memory = {memory_counter : mem_group}
@@ -37,7 +37,7 @@ threading.Timer(time_lapse, brain_function).start()
 def vision_neron(id):
     id = 0
     neron_id = v
-    data = random.randint(1, 100)
+    data = random.randint(1, 10)
     time = datetime.datetime.now()
     vdata = {'neron_id' : neron_id, 'id' : id, 'data' : data, 'time' : time}
     print data
@@ -46,7 +46,7 @@ def vision_neron(id):
 def audio_neron(id):
     id = 0
     neron_id = a
-    data = random.randint(1, 1000)
+    data = random.randint(1, 10)
     time = datetime.datetime.now()
     adata = {'neron_id' : neron_id, 'id' : id, 'data' : data, 'time' : time}
     print data
@@ -55,7 +55,7 @@ def audio_neron(id):
 def smell_neron(id):
     id = 0
     neron_id = s
-    data = random.randint(1, 10000)
+    data = random.randint(1, 10)
     time = datetime.datetime.now()
     sdata = {'neron_id' : neron_id, 'id' : id, 'data' : data, 'time' : time}
     print data
@@ -64,7 +64,7 @@ def smell_neron(id):
 def touch_neron(id):
     id = 0
     neron_id = th
-    data = random.randint(1, 100000)
+    data = random.randint(1, 10)
     time = datetime.datetime.now()
     thdata = {'neron_id' : neron_id, 'id' : id, 'data' : data, 'time' : time}
     print data
@@ -73,7 +73,7 @@ def touch_neron(id):
 def taste_neron(id):
     id = 0
     neron_id = t
-    data = random.randint(1, 1000000)
+    data = random.randint(1, 10)
     time = datetime.datetime.now()
     tdata = {'neron_id' : neron_id, 'id' : id, 'data' : data, 'time' : time}
     print data
