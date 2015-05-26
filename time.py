@@ -18,6 +18,9 @@ memories_processed = 0
 ########################### brain process (creates memories)
 def brain_function():
     mem_group = []
+    global memory_bank
+    global memory_counter
+    global memories_processed
     memory_counter += 1
     for nerons in sensory_atlas:
         memory_frag = nerons(memory_counter)
