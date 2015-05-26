@@ -8,7 +8,7 @@ import pickle
 # THE BRAIN PROJECT
 
 
-## MEMORY STRUCTURE memory_bank = [ [0]{index : [ { neron_id, id, data, time }, { neron_id, id, data, time } ... ] },
+## MEMORY STRUCTURE memory_bank = [ {index : [ { neron_id, id, data, time }, { neron_id, id, data, time } ... ] },
 
 time_lapse = 60
 memory_counter = 0
@@ -35,7 +35,7 @@ threading.Timer(time_lapse, brain_function).start()
 
 ########################### sensory system
 def vision_neron(id):
-    id = 0
+    id = id
     neron_id = v
     data = random.randint(1, 10)
     time = datetime.datetime.now()
@@ -44,7 +44,7 @@ def vision_neron(id):
     return json.dumps(vdata)
 
 def audio_neron(id):
-    id = 0
+    id = id
     neron_id = a
     data = random.randint(1, 10)
     time = datetime.datetime.now()
@@ -53,7 +53,7 @@ def audio_neron(id):
     return json.dumps(adata)
 
 def smell_neron(id):
-    id = 0
+    id = id
     neron_id = s
     data = random.randint(1, 10)
     time = datetime.datetime.now()
@@ -62,7 +62,7 @@ def smell_neron(id):
     return json.dumps(sdata)
 
 def touch_neron(id):
-    id = 0
+    id = id
     neron_id = th
     data = random.randint(1, 10)
     time = datetime.datetime.now()
@@ -71,7 +71,7 @@ def touch_neron(id):
     return json.dumps(thdata)
 
 def taste_neron(id):
-    id = 0
+    id = id
     neron_id = t
     data = random.randint(1, 10)
     time = datetime.datetime.now()
@@ -86,7 +86,38 @@ def shortTerm_memory():
     ### if the memory data is the same throw it out if it is different keep it  but if it is different and
     ### close to the future memory destroy it.
 
+    ## MEMORY STRUCTURE memory_bank = 
+    #  (0, [
+    #       [0]{0:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       },
+    #
+    #       [1]{1:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       },
+    #
+    #       [2]{2:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       }
+    #   ])
+
+    #  (1, [
+    #       [0]{0:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       },
+    #
+    #       [1]{1:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       },
+    #
+    #       [2]{2:
+    #           [{neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }, {neron_id, id, data, time }]
+    #       }
+    #   ])
+
+
     present_memory = memory_bank
+    present_data = []
 
     ## get past memories
     pkl_file = open('memory.pkl', 'rb')
@@ -94,16 +125,29 @@ def shortTerm_memory():
     pkl_file.close()
 
     ## filter memories
-    for mem in past_memories:
-        i = 0
-        i += 1
-        for past_neuron in mem[i]:
-            past_sensory = past_neuron['neron_id'], past_neuron['data'] 
+    #present = list(enumerate((present_memory)))
+    past_list = list(enumerate((past_memories)))
 
-        for curr_mem in present_memory:    
-            for current_neuron in present_memory:
-                current_sensory = current_neuron['neron_id'], current_neuron['data'] 
-                
+    ## Get data out of data structure
+    for x in xrange(0,len(present_memory)):
+        for y in xrange(0,4):
+            present_info = present_memory[x][str(y)][y]
+            neron_id = present_info['neron_id']
+            data = present_info['data']
+            present_mem_data = neron_id, data
+            present_data.append(present_mem_data)
+
+    for l in xrange(0, len(past_list)):
+        for x in xrange(0,len(past_memories)):
+            for y in xrange(0,4):
+                past_info = past_list[x][str(y)][y]
+                past_neron_id = past_info['neron_id']
+                past_data = past_info['data']
+                past_mem_data = past_neron_id, past_data
+                # compare touch (neron_id : th) past to present if they are not equal save to memory
+
+
+
     ## put memory data in a pickle file
     outputmemory = open('memory.pkl', 'wb')
     pickle.dump(memory_bank, outputmemory)
